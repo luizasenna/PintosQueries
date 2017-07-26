@@ -1,0 +1,41 @@
+%vars
+$LJ={:store:LOJA;0;N}
+$PV={PDV,4;;N}
+$XA={TRANSACAO,10;;n}
+$DI={:d:Data inicial;;S}
+$DF={:d:Data final;;S}
+$TN={:m:Turno;;S}|Todos|Manha|Tarde|
+%
+select 
+ IF(O.bits6 & 1 = 0, 'Manha', 'Tarde')                  AS Turno_Entrega,
+ R.storeno                                              AS Loja,
+ R.xano                                                 AS Transacao,
+ R.pdvno                                                AS PDV,   
+ DATE_FORMAT(R.date,"%d/%m/%Y")                         AS Data,
+ IF(O.bits6 & 2 = 0, 'Manha', 'Tarde')                  AS T_Montagem,
+ V.empno                                                AS Cod_Vendedor, 
+ E.name                                                 AS Nome_Vendedor,
+ 1000                                                   AS Qtde
+from sqldados.nfr as R
+ LEFT JOIN sqldados.xalog2 AS V
+    ON  V.storeno = R.storeno
+    AND V.pdvno   = R.pdvno
+    AND V.xano    = R.xano
+ LEFT JOIN sqldados.eord AS O
+    ON  O.storeno = V.storeno
+    AND O.ordno   = V.empno
+ LEFT JOIN sqldados.emp AS E
+    ON E.no = V.empno
+ LEFT JOIN sqldados.prd as P 
+    ON P.no = V.prdno
+ where  (R.xano = '[$XA]' OR '[$XA]' = ' ') and 
+	(R.storeno = [$LJ] OR [$LJ] = 0) and 
+	(R.pdvno = '[$PV]' OR '[$PV]' = ' ') AND
+	(R.date between [$DI] and [$DF]) AND
+	CASE
+	  WHEN '[$TN]' = '0' THEN 0=0
+	  WHEN '[$TN]' = '1' THEN O.bits6 & 1 = 0 
+	  WHEN '[$TN]' = '2' THEN O.bits6 is null
+	END                   
+GROUP BY Loja, Transacao, PDV
+ORDER BY Turno_Entrega, Loja, Transacao
