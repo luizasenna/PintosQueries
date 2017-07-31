@@ -1,0 +1,16 @@
+//Para ver a data do primeiro cartão que está armazenado na tabela: 
+
+select * from CARTOESAVULSOS order by DATAHORAENTRADA asc
+
+//Para ver a partir da data que deseja excluir (alterar data no final da query):
+
+select * from CARTOESAVULSOS where DATAHORAENTRADA < '2016-08-01'
+
+//Para apagar os cartões a partir da data desejada (alterar data no final da query):
+
+delete from CARTOESAVULSOS where DATAHORAENTRADA < '2016-08-01'
+
+// 2017-07-31
+select * from CARTOESAVULSOS order by DATAHORAENTRADA asc;
+select * from CARTOESAVULSOS where DATAHORAENTRADA < '2017-06-01';
+delete from CARTOESAVULSOS where DATAHORAENTRADA < '2017-06-01';
