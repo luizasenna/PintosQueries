@@ -1,0 +1,24 @@
+select 
+notas.CODAVALIACAO              AS CodAvaliacao, 
+a.NOME                          as NomeAvaliacao,
+notas.CODITEMAVAL               as CodItemAvaliado,
+p.CHAPAAVALIADOR                as ChapaAvaliador, 
+chefe.NOME                      as NomeAvaliador,  
+p.CHAPAAVALIADO                 as ChapaAvaliado,
+func.NOME                       as NomeAvaliado,
+notas.NOTAAVALIADOR             as Nota,  
+notas.COMENTARIO                as Observacao
+from notas
+inner join participantes as p 
+    on  p.CODPARTICIPANTE = notas.CODPARTICIPANTE 
+    and p.CODAVALIACAO = notas.CODAVALIACAO
+    and p.CODCOLIGADA = notas.CODCOLIGADA
+left join funcionarios as chefe
+    on p.CHAPAAVALIADOR = chefe.CHAPA
+left join funcionarios as func 
+    on func.CHAPA = p.CHAPAAVALIADO
+inner join avaliacoes as a
+    on a.CODAVALIACAO = notas.CODAVALIACAO
+where (NOTAAVALIADOR <> 0)
+and notas.CODAVALIACAO > 24
+order by chefe.NOME, func.NOME
