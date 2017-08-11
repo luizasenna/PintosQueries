@@ -1,0 +1,16 @@
+// Regina
+select a.NOME, a.CODAVALIACAO, p.CHAPAAVALIADO, p.CODPARTICIPANTE from participantes as p
+inner join avaliacoes as a on a.CODCOLIGADA = p.CODCOLIGADA and a.CODAVALIACAO = p.CODAVALIACAO
+where CHAPAAVALIADO = 110320
+
+//Gardenia
+
+select a.NOME, a.CODAVALIACAO, p.CHAPAAVALIADO, p.CODPARTICIPANTE from participantes as p
+inner join avaliacoes as a on a.CODCOLIGADA = p.CODCOLIGADA and a.CODAVALIACAO = p.CODAVALIACAO
+where CHAPAAVALIADO = 110540
+
+//regina
+select * from notas where CODPARTICIPANTE = 60313 and CODAVALIACAO = 25
+
+//gardenia
+select * from notas where CODPARTICIPANTE = 60437 and CODAVALIACAO = 25
