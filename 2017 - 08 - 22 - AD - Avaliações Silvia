@@ -1,0 +1,51 @@
+
+
+select CHAPAAVALIADOR, f.NOME, p.CODAVALIACAO, a.NOME, p.CHAPAAVALIADO, func.NOME, p.CODPARTICIPANTE, virtual.num from participantes as p
+left join notas as n 
+    on n.CODCOLIGADA = p.CODCOLIGADA 
+    and n.CODAVALIACAO = p.CODAVALIACAO
+    and n.CODPARTICIPANTE = p.CODPARTICIPANTE
+inner join funcionarios as f
+    on f.CHAPA = p.CHAPAAVALIADOR
+inner join avaliacoes as a
+    on a.CODCOLIGADA = p.CODCOLIGADA
+    and a.CODAVALIACAO = p.CODAVALIACAO
+inner join funcionarios as func 
+    on func.CHAPA = p.CHAPAAVALIADO
+left join licenciados as lic 
+    on p.CODPARTICIPANTE = lic.CODPARTICIPANTE
+inner join (
+select 1 as num from dual
+union
+select 2 as num from dual
+union
+select 3 as num from dual
+union
+select 4 as num from dual
+union
+select 5 as num from dual
+union
+select 6 as num from dual
+union
+select 7 as num from dual
+union
+select 8 as num from dual
+union
+select 9 as num from dual
+union
+select 10 as num from dual
+union
+select 11 as num from dual
+union
+select 12 as num from dual
+union
+select 13 as num from dual
+union
+select 14 as num from dual
+union
+select 15 as num from dual
+) as virtual
+where NOTAAVALIADOR is null and a.CODAVALIACAO >24 and a.CODAVALIACAO < 37 and f.CHAPA not in (99996,99999 ) and lic.CHAPAVALIADO is null
+and CHAPAAVALIADOR = 011106
+order by func.NOME, p.CODAVALIACAO, num
+; 
