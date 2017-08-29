@@ -52,4 +52,32 @@ drop table if exists notasPessoa;
 GO
 
 
-select * from notasPessoa where CHAPA = '011942';
+select * from notasPessoa where CHAPA = '110359';
+
+select NOME from funcionarios where CHAPA = '019357';
+
+select SUM() from notasPessoa order by CHAPA;
+
+delete from media2016;
+select * from media2016;
+
+select DISTINCT CHAPA, SUM(MEDIA) as SOMA, COUNT(CHAPA) AS QTDE  FROM media2016 group by CHAPA
+
+select * from media2016 where AVALIACAO between 25 and 36 and  CHAPA = '019357' group by CHAPA, AVALIACAO;
+
+select * from notasPessoa WHERE CHAPA = '019357' order by CHAPA;
+
+select DISTINCT CHAPA, SUM(MEDIA) as SOMA, COUNT(CHAPA) AS QTDE  FROM media2016 group by CHAPA;
+
+select funcoes.NOME from funcionarios
+inner join funcoes on
+funcoes.CODIGO = funcionarios.CODFUNCAO
+where CHAPA = '011942'
+
+select * from funcionarios where CODPESSOA = 995;
+
+select * from funcionarios where nome like '%suellen%'
+
+select * from participantes 
+left join notas on participantes.CODPARTICIPANTE = notas.CODPARTICIPANTE
+where CHAPAAVALIADO = 12158
