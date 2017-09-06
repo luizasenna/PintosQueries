@@ -12,3 +12,17 @@ inner join avaliacoes on year(avaliacoes.DATAABERTURA) = ano and month(avaliacoe
 update assiduidade 
 inner join avaliacoes on year(avaliacoes.DATAABERTURA) = ano and month(avaliacoes.DATAABERTURA)=mes
 set assiduidade.codavaliacao = avaliacoes.CODAVALIACAO
+
+
+//Nova regra:
+create temporary table acertohoras
+select 
+sum(
+            if(
+            atrasos.atraso>240,atrasos.atraso,0
+            )
+        )/60 as atraso, chapa, MONTH(data) as mes, YEAR(data) as ano
+
+ from atrasos
+group by chapa, YEAR(data), MONTH(data)
+ORDER BY YEAR(data), MONTH(data) ;
