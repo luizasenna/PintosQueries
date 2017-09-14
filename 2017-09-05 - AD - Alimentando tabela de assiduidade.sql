@@ -13,16 +13,22 @@ update assiduidade
 inner join avaliacoes on year(avaliacoes.DATAABERTURA) = ano and month(avaliacoes.DATAABERTURA)=mes
 set assiduidade.codavaliacao = avaliacoes.CODAVALIACAO
 
-
-//Nova regra:
+drop table if exists acertohoras;
 create temporary table acertohoras
 select 
 sum(
             if(
-            atrasos.atraso>240,atrasos.atraso,0
+            atrasos.atraso>120,atrasos.falta+atrasos.atraso,atrasos.falta
             )
         )/60 as atraso, chapa, MONTH(data) as mes, YEAR(data) as ano
 
  from atrasos
 group by chapa, YEAR(data), MONTH(data)
 ORDER BY YEAR(data), MONTH(data) ;
+
+
+
+update assiduidade
+inner join acertohoras as AC on AC.chapa = assiduidade.chapa and AC.mes = assiduidade.mes and AC.ano = assiduidade.ano 
+set assiduidade.atraso = AC.atraso
+
