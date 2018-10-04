@@ -1,0 +1,5 @@
+select CODIGO, CPF, CEP
+from PPESSOA AS P
+inner join PFUNC AS F 
+on P.CODIGO = F.CODPESSOA
+WHERE CODSITUACAO IN ('A','F','E')

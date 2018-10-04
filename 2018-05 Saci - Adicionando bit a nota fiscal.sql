@@ -1,0 +1,1 @@
+update nfcecont set bits=1 where storeno = 11 and pdvno = 1102  and xano =  92006228
